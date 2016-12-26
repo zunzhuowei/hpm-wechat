@@ -84,15 +84,6 @@ public class MOauth2ViewController {
         return "我的薪资信息";
     }
 
-    /*@ResponseBody//获取本月薪资
-    @RequestMapping(value = "/msg/mon/salary",method = RequestMethod.POST)
-    public String thisMonthSalaryInfo(@RequestParam(name = "A0100") String A0100
-            ,@RequestParam(name = "salaryDate") String salaryDate) {
-        System.out.println("A0100 = " + A0100);
-        System.out.println("salaryDate = " + salaryDate);
-        return "我的薪资信息";
-    }*/
-
     //绑定HR
     @RequestMapping(value = "/msg/activation", method = RequestMethod.GET)
     public String activation(@RequestParam(name = "code") String code,
