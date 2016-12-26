@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="hpm-wechat-cp:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="hpm.war">
+      <element id="artifact" artifact-name="hpm-wechat-cp:war exploded" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--<Configuration status="error" monitorInterval="600">-->
+<Configuration status="debug" monitorInterval="600">
+<!--先定义所有的appender -->
+<appenders>
+	<!--输出控制台 -->
+	<Console name="Console" target="SYSTEM_OUT">
+		<ThresholdFilter level="debug" />
+		<PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n" />
+		<!--<PatternLayout charset="GBK" pattern="%d{HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n" />-->
+	</Console>
+
+	<!--输出日志文件到web工程中 
+	<RollingFile name="LogFile" 
+				fileName="${web:rootDir}/logs/error.log" 
+				filePattern="${web:rootDir}/logs/errorn_%d{yyyy-MM-dd}_%i.log">	
+		<PatternLayout pattern="%d %p %c{1.} [%t] %m%n" />
+		<Policies>
+			<TimeBasedTriggeringPolicy modulate="true" interval="24" />
+			<SizeBasedTriggeringPolicy size="10240 KB" />
+		</Policies>
+		<DefaultRolloverStrategy max="20" />
+	</RollingFile>
+	-->
+		
+</appenders>
+
+<loggers>
+	<root level="info">
+		<!--  <appender-ref ref="LogFile" />-->
+		<appender-ref ref="Console" />
+	</root>
+</loggers>
+</Configuration>

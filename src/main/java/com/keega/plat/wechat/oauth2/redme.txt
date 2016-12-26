@@ -1,0 +1,8 @@
+PC端访问网页授权的时候，由于出现如下信息，然后点击确定之后，会发送多条code和state的东西过来，然后
+就会报错（空指针）;移动端没有这个问题。估计是我自己开发的域名没有备案！
+
+
+将要访问
+http://161818x71d.iask.in/wx/home?code=041DvyzZ0Wqtk12WUvzZ0mYjzZ0DvyzU&state=STATE&winzoom=1
+非微信官方网页，继续访问将转换成手机预览模式。
+

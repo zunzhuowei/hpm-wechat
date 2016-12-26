@@ -1,0 +1,63 @@
+<xml>
+
+    <!--用于配置用户登录名和密码字段-->
+    <user_login>
+        <username>E013H</username>
+        <password>userPassword</password>
+    </user_login>
+
+    <!--session要存放的信息字段-->
+    <user_config>
+        <field name="A0100">人员标志</field>
+        <field name="A0101">姓名</field>
+        <field name="E0127">工号</field>
+        <field name="B0110">单位</field>
+        <field name="E0122">部门</field>
+        <field name="E01A1">岗位</field>
+    </user_config>
+
+    <!-- 首页菜单 -->
+    <user_menus>
+        <!--<menu name="waitThing" conUrl="/wait/thing/home" imgUrl="/images/index_28.png" desc="我的代办事宜">代办事宜</menu>-->
+        <menu name="myInfo" conUrl="/self/info/home" imgUrl="/images/index_31.png" desc="我的个人信息">我的信息</menu>
+        <menu name="mySalary" conUrl="/self/salary/home" imgUrl="/images/1_03.png" desc="我的个人薪酬">我的薪酬</menu>
+        <!--<menu name="workInfo" url="控制器地址" desc="我的工时信息">工时信息</menu>
+        <menu name="myCheck" url="控制器地址" desc="我的个人考勤">我的考勤</menu>-->
+    </user_menus>
+
+    <!-- 代办事宜字段 -->
+   <!-- <waitThing>
+
+    </waitThing>-->
+
+
+    <!--我的信息显示字段,name表示数据库字段名，textField表示别名-->
+    <myInfo>
+        <field name="C0101" textField="age">年龄</field>
+        <field name="E0127" textField="number">工号</field>
+        <field name="C0104" textField="tel">电话号码</field>
+        <field name="A0177" textField="card">身份证</field>
+        <field name="C01UG" textField="address">住址</field>
+        <field name="A0107" textField="sex">性别</field>
+    </myInfo>
+
+    <!--我的薪酬显示字段-->
+    <mySalary>
+        <field name="E58AD">应发合计</field>
+        <field name="E0127">工号</field>
+        <field name="B0110">单位</field>
+        <field name="E0122">部门</field>
+        <field name="E01A1">岗位</field>
+    </mySalary>
+
+    <!-- 工时信息字段 -->
+   <!-- <workInfo>
+
+    </workInfo>-->
+
+    <!--我的考勤字段  -->
+    <!--<myCheck>
+
+    </myCheck>-->
+
+</xml>

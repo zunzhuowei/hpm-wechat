@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!-- 配置使Spring采用CGLIB代理 -->
+    <!--<aop:aspectj-autoproxy proxy-target-class="true"/>-->
+
+    <util:properties id="wxhomeProperties" location="classpath:/wxhome.properties"/>
+    <util:properties id="wxmsgProperties" location="classpath:/wxmsg.properties"/>
+
+    <bean id="wxMsgCpService" class="me.chanjar.weixin.cp.api.WxCpServiceImpl">
+        <property name="wxCpConfigStorage" ref="msgConfigStorage"/>
+    </bean>
+    <bean id="msgConfigStorage" class="me.chanjar.weixin.cp.api.WxCpInMemoryConfigStorage">
+        <property name="aesKey" value="#{wxmsgProperties.msg_aeskey}"/>
+        <property name="agentId" value="#{wxmsgProperties.msg_agent_id}"/>
+        <property name="corpSecret" value="#{wxmsgProperties.msg_corp_secret}"/>
+        <property name="corpId" value="#{wxmsgProperties.msg_corp_id}"/>
+        <property name="token" value="#{wxmsgProperties.msg_token}"/>
+        <property name="oauth2redirectUri" value="#{wxmsgProperties.msg_oauth2redirectUri}"/>
+    </bean>
+
+    <bean id="wxHomeCpService" class="me.chanjar.weixin.cp.api.WxCpServiceImpl">
+        <property name="wxCpConfigStorage" ref="homeConfigStorage"/>
+    </bean>
+    <bean id="homeConfigStorage" class="me.chanjar.weixin.cp.api.WxCpInMemoryConfigStorage">
+        <property name="aesKey" value="#{wxhomeProperties.home_aeskey}"/>
+        <property name="agentId" value="#{wxhomeProperties.home_agent_id}"/>
+        <property name="corpSecret" value="#{wxhomeProperties.home_corp_secret}"/>
+        <property name="corpId" value="#{wxhomeProperties.home_corp_id}"/>
+        <property name="token" value="#{wxhomeProperties.home_token}"/>
+    </bean>
+
+
+    <!-- 这个框架的与spring的整合是用来配置定时任务的 -->
+    <!--<context:component-scan base-package="com.keega.plat.wechat.quartz" />-->
+
+    <!-- +++++++++++++++++++++++++第一步：创建相应的工作详情++++++++++++++++++++++ -->
+    <!-- For times when you just need to invoke a method on a specific object -->
+    <bean id="simpleJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="refreshAccessTokenTask"/>
+        <property name="targetMethod" value="refreshAccessToken"/>
+    </bean>
+    <!-- +++++++++++++++++++++++++第一步：创建相应的工作详情++++++++++++++++++++++ -->
+
+    <!--=====================第二步：将对应的工作详情放到对应的触发器中======================== -->
+    <bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+        <property name="jobDetail" ref="simpleJobDetail"/>
+        <!--<property name="startTime" value="2016-12-06"/>-->
+        <!-- 启动延迟毫秒计算 -->
+        <property name="startDelay" value="5000"/>
+        <!-- 重复执行时间毫秒计算 -->
+        <property name="repeatInterval" value="7100000"/>
+    </bean>
+    <!--=================第二步：将对应的工作详情放到对应的触发器中================== -->
+
+    <!-- 第三步：把所有的触发器和工作详情放到这个调度工厂中 -->
+    <!-- Scheduler factory bean to glue together jobDetails and triggers to Configure Quartz Scheduler -->
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="jobDetails">
+            <list>
+                <ref bean="simpleJobDetail"/>
+            </list>
+        </property>
+        <property name="triggers">
+            <list>
+                <ref bean="simpleTrigger"/>
+            </list>
+        </property>
+    </bean>
+    <!-- 第三步：把所有的触发器和工作详情放到这个调度工厂中 -->
+
+
+</beans>
