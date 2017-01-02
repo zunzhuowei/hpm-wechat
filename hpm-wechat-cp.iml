@@ -99,5 +99,12 @@
     <orderEntry type="library" name="Maven: dom4j:dom4j:1.6.1.redhat-7" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.16" level="project" />
     <orderEntry type="library" name="Maven: org.freemarker:freemarker:2.3.25-incubating" level="project" />
+    <orderEntry type="library" name="SearchControl_min" level="application" />
+    <orderEntry type="library" name="TrafficControl_min" level="application" />
+    <orderEntry type="library" name="DrawingManager_min" level="application" />
+    <orderEntry type="library" name="SearchInfoWindow_min" level="application" />
+    <orderEntry type="library" name="GeoUtils_min" level="application" />
+    <orderEntry type="library" name="jquery" level="application" />
+    <orderEntry type="library" name="jquery.mobile-1.4.5" level="application" />
   </component>
 </module>

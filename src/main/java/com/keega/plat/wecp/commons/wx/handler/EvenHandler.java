@@ -55,7 +55,7 @@ public class EvenHandler extends AbstractHandler {
                     .build();
         }
 
-        if (event.equals("LOCATION")) {//如果不是位置上传
+        if (event.equals("LOCATION") || event.equals("enter_agent")) {//如果不是位置上传
             return WxCpXmlOutTextMessage.TEXT()
                     .content("")
                     .fromUser(wxCpXmlMessage.getToUserName())

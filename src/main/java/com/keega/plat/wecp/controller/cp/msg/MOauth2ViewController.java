@@ -1,5 +1,6 @@
 package com.keega.plat.wecp.controller.cp.msg;
 
+import com.keega.plat.wecp.service.core.msg.ICoreServiceMsg;
 import com.keega.plat.wecp.service.core.msg.IViewsService;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.cp.api.WxCpService;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
@@ -28,6 +28,8 @@ public class MOauth2ViewController {
     private WxCpService wxMsgCpService;
     @Resource
     private IViewsService viewsService;
+    @Resource
+    private ICoreServiceMsg coreServiceMsg;
 
     //视图首页
     @RequestMapping(value = "/msg/home" , method = RequestMethod.GET)

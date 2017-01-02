@@ -53,9 +53,8 @@ public interface ICoreServiceMsg {
      * 通过userid获得基本用户信息
      *
      * @param userid 企业用户用户id
-     * @param lang 语言
      * @return 微信企业用户
      */
-    WxCpUser getUserInfo(String userid, String lang) throws WxErrorException;
+    WxCpUser getUserInfo(String userid) throws WxErrorException;
 
 }

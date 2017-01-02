@@ -7,9 +7,9 @@ import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpXmlMessage;
 import me.chanjar.weixin.cp.bean.WxCpXmlOutMessage;
 import me.chanjar.weixin.cp.bean.WxCpXmlOutTextMessage;
+import org.apache.commons.lang3.RandomUtils;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.Map;
 
 /**
@@ -57,24 +57,32 @@ public class MsgHandler extends AbstractHandler {
             int inCount = Integer.parseInt(wxCpXmlMessage.getContent());
             WxSession wxSession = wxSessionManager.getSession(wxCpXmlMessage.getFromUserName());
             String returnContent = "";
-            if (wxSession.getAttribute("user") == null)
-                wxSession.setAttribute("count", 55);
+            if (wxSession.getAttribute("count") == null){
+                int initCount = RandomUtils.nextInt(0,100);
+                wxSession.setAttribute("count", initCount);
+                System.out.println("进来设置session,答案为："+initCount);
+            }
             int count = (int) wxSession.getAttribute("count");
-
+                //wxSession.removeAttribute("count");
                 if (count>inCount)
                     returnContent = "你输入的数字小了！你继续猜！";
                 if (count<inCount)
                     returnContent = "你输入的数字大了！你继续猜！";
-                if (count == inCount)
+                if (count == inCount){
                     returnContent = "恭喜你才对了！";
+                    wxSession.removeAttribute("count");
+                }
             return WxCpXmlOutTextMessage.TEXT()
                     .fromUser(wxCpXmlMessage.getToUserName())
                     .toUser(wxCpXmlMessage.getFromUserName())
                     .content(returnContent)
                     .build();
         } catch (NumberFormatException e) {
+
+            String c = "你说的:“"+content+"”;我不知道你什么意思！";
+            if (content == null) c = "";
                 return WxCpXmlOutTextMessage.TEXT()
-                        .content("你说的:“"+content+"”;我不知道你什么意思！")//回复的内容  测试加密消息
+                        .content(c)//回复的内容  测试加密消息
                         .fromUser(wxCpXmlMessage.getToUserName())
                         .toUser(wxCpXmlMessage.getFromUserName())
                         .build();

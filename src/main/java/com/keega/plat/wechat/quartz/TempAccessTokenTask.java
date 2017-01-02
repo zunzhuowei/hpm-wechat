@@ -24,6 +24,9 @@ public class TempAccessTokenTask {
             realPath = realPath.substring(1, realPath.length() - 14) + "/hpmMavenWebapp/temp/";
         }
         path = realPath;
+        /* String realPath = Thread.currentThread().getContextClassLoader().
+                getResource("").getPath();
+        path = realPath;*/
     }
 
     //保存临时文件
@@ -40,7 +43,7 @@ public class TempAccessTokenTask {
     //写access token到临时文件中
     private static void writeAccessToken2File(String accessToken,String fileName) throws IOException {
         String realPath = path + fileName + ".txt";
-//System.out.println(realPath);
+System.out.println(realPath);
         BufferedWriter writer = null;
         File file = new File(realPath);
         writer = new BufferedWriter(new OutputStreamWriter(

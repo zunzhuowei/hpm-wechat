@@ -105,10 +105,9 @@ public class CoreServiceMsg implements ICoreServiceMsg {
         return null;
     }
 
-    @Override//这个方法有问题。故返回null;
-    public WxCpUser getUserInfo(String userid, String lang) throws WxErrorException {
-        //return this.wxMsgCpService.userGet(userid);
-        return null;
+    @Override
+    public WxCpUser getUserInfo(String userid) throws WxErrorException {
+        return this.wxMsgCpService.userGet(userid);
     }
 
 

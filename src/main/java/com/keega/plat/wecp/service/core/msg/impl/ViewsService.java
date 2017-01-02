@@ -3,6 +3,7 @@ package com.keega.plat.wecp.service.core.msg.impl;
 import com.keega.plat.wecp.service.core.msg.IViewsService;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.cp.api.WxCpService;
+import me.chanjar.weixin.cp.bean.WxCpMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 

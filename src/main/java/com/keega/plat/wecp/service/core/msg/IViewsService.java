@@ -29,4 +29,5 @@ public interface IViewsService {
      * @throws WxErrorException 异常
      */
     String redirect2OauthPage(String code, Model model, HttpSession session) throws WxErrorException;
+
 }

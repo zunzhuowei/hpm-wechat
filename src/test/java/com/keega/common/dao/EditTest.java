@@ -8,7 +8,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.sql.SQLException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:spring-datasource.xml","classpath:spring-mvc.xml"})
+@ContextConfiguration(locations = {"classpath:spring-datasource.xml","classpath:spring-mvc.xml","classpath:spring-wechat.xml"})
 public class EditTest {
 
 	@Test

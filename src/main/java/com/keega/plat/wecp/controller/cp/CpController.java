@@ -3,6 +3,7 @@ package com.keega.plat.wecp.controller.cp;
 import com.google.gson.Gson;
 import com.keega.plat.wecp.service.core.home.ICoreServiceHome;
 import com.keega.plat.wecp.service.core.msg.ICoreServiceMsg;
+import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.cp.api.WxCpConfigStorage;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpXmlMessage;
@@ -15,6 +16,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * 微信顶级控制器，用作企业控制器的父类
@@ -141,6 +143,27 @@ public abstract class CpController {
             return null;
         }
     }
+
+    //auth2授权
+    //@ResponseBody//这个用来测试，发送“授权”，回复一个授权uri
+    //@RequestMapping(value = "/msg/auth2")//redirect 过来的地址
+    /*public void auth2(HttpServletRequest request, HttpServletResponse response)
+            throws WxErrorException, IOException {
+        response.setContentType("text/html;charset=utf-8");
+        response.setStatus(HttpServletResponse.SC_OK);
+
+        String code = request.getParameter("code");
+        response.getWriter().println("<h1>code</h1>");
+        response.getWriter().println(code);
+
+        String[] res = this.wxMsgCpService.oauth2getUserInfo(code);
+        response.getWriter().println("<h1>result</h1>");
+        response.getWriter().println(Arrays.toString(res));
+
+        response.getWriter().flush();
+        response.getWriter().close();
+        //return "/views/wechat/menu";
+    }*/
 
     //消息型微信回调请求
     //@RequestMapping(value = "/msg/init", method = RequestMethod.POST)

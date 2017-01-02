@@ -51,25 +51,4 @@ public class WxMsgTypeController extends CpController{
         return "/views/wechat/menu";
     }
 
-    //auth2授权
-    @ResponseBody//这个用来测试，发送“授权”，回复一个授权uri
-    @RequestMapping(value = "/msg/auth2")//redirect 过来的地址
-    public void auth2(HttpServletRequest request, HttpServletResponse response)
-            throws WxErrorException, IOException {
-        response.setContentType("text/html;charset=utf-8");
-        response.setStatus(HttpServletResponse.SC_OK);
-
-        String code = request.getParameter("code");
-        response.getWriter().println("<h1>code</h1>");
-        response.getWriter().println(code);
-
-        String[] res = this.wxMsgCpService.oauth2getUserInfo(code);
-        response.getWriter().println("<h1>result</h1>");
-        response.getWriter().println(Arrays.toString(res));
-
-        response.getWriter().flush();
-        response.getWriter().close();
-        //return "/views/wechat/menu";
-    }
-
 }
