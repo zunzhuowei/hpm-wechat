@@ -1,15 +1,12 @@
 package com.keega.plat.wecp.service.core.msg.impl;
 
-import com.alibaba.fastjson.JSONArray;
 import com.keega.common.utils.JsonUtil;
 import com.keega.plat.wecp.model.map.BaiduMap;
 import com.keega.plat.wecp.model.map.MapArray;
-import com.keega.plat.wecp.model.map.Point;
 import com.keega.plat.wecp.service.core.msg.IMapService;
 import com.keega.plat.wecp.util.map.BaiduMapUtil;
 import org.springframework.stereotype.Service;
 
-import javax.json.Json;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;

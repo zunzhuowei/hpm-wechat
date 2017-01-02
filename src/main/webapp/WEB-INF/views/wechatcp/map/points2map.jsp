@@ -105,19 +105,6 @@
         map.addOverlay(polygon);   //增加多边形
     }
 
-    /*for(var k=0;k<jsonObject.length;k++) {
-        var pointsArrays = JSON.parse(jsonObject[k].map);
-        for (var j=0;j<pointsArrays.length;j++) {
-            var pasePoints = new Array(pointsArrays[j].length);
-            for (var i=0;i<pointsArrays[j].length;i++){
-                pasePoints[i] = new BMap.Point(parseFloat(pointsArrays[j][i].lng),parseFloat(pointsArrays[j][i].lat));
-            }
-            var polygon = new BMap.Polygon(pasePoints,
-                    {strokeColor:"red",fillColor:"red", strokeWeight:2, strokeOpacity:0.5});  //创建多边形
-            map.addOverlay(polygon);   //增加多边形
-        }
-    }*/
-
     var geolocation = new BMap.Geolocation();
     geolocation.getCurrentPosition(function (r) {
         if (this.getStatus() == BMAP_STATUS_SUCCESS) {
