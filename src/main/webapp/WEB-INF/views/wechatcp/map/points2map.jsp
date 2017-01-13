@@ -46,8 +46,10 @@
     <a href="javascript:;" class="weui-btn weui-btn_plain-primary" onclick="alert(overlays.length)">考勤范围</a>
     <a href="javascript:;" class="weui-btn weui-btn_primary"
        id="showLoadingToast" onclick="send2server()">考勤范围</a>
-    <a href="javascript:;" class="weui-btn weui-btn_warn" onclick="clearAll()" id="showToast">考勤范围</a>
+    <a href="javascript:;" class="weui-btn weui-btn_warn" onclick="clearOne()" id="showToast">删除选中的考勤范围</a>
 </div>
+
+<input type="text" id="del" style="display: none"/>
 
 <!--BEGIN toast-->
 <div id="toastload" style="display: inherit;">
@@ -103,6 +105,13 @@
         var polygon = new BMap.Polygon(pasePoints,
                 {strokeColor:"red",fillColor:"red", strokeWeight:2, strokeOpacity:0.5});  //创建多边形
         map.addOverlay(polygon);   //增加多边形
+        polygon.addEventListener("click", showInfo);
+        function showInfo(e){
+            var delPoint = JSON.stringify(e.point);
+            $('#del').val(delPoint);
+            //alert("已选中对象！");
+            //alert(e.point.lng + ", " + e.point.lat);
+        }
     }
 
     var geolocation = new BMap.Geolocation();
@@ -126,6 +135,11 @@
             alert('failed' + this.getStatus());
         }
     }, {enableHighAccuracy: true});
+
+    function clearOne() {
+        var point = $('#del').val();
+        alert(point);//TODO ajax 传到后台判断点在哪里，进行删除考勤范围。
+    }
 
 </script>
 </body>

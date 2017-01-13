@@ -20,7 +20,14 @@
     </style>
 </head>
 <body>
-
+<!--BEGIN toast inherit -->
+<div id="toastload" style="display: none;">
+    <div class="weui-mask_transparent"></div>
+    <div class="weui-toast">
+        <i class="weui-loading weui-icon_toast"></i>
+        <p class="weui-toast__content">提交中，请稍后...</p>
+    </div>
+</div>
 <div class="page">
     <div class="weui-cells__title my_title">微信与HR系统绑定</div>
 
@@ -91,9 +98,10 @@
             alert("操作太频繁，请稍后再试！");
             return;
         }
+        $('#toastload').css("display", "inherit");
 
         $.ajax({
-            url: "../wx/activation",
+            url: "/cp/msg/try/act",
             type: "post",
             data: {
                 openId: openId,
@@ -101,8 +109,9 @@
                 password: password
             },
             success: function (data) {//01表示成功，02表示失败
+                $('#toastload').css("display", "none");
                 if (data == "01") {
-                    window.location.href = "http://161818x71d.iask.in/wx/ac/su";
+                    window.location.href = "http://161818x71d.iask.in/cp/msg/ac/su";
                 }else if (data == "02") {
                     count ++;
                     alert("绑定失败！\n第"+count+"次绑定失败！");
@@ -112,6 +121,9 @@
                 }else if(data == "04"){
                     count ++;
                     alert("绑定失败，请检查hr账号和密码！\n第"+count+"次绑定失败！");
+                }else if(data == "05"){
+                    count ++;
+                    alert("绑定失败，您的微信号已经绑定过Hr系统了！");
                 }else {
                     count ++;
                     alert("绑定失败，系统异常！");

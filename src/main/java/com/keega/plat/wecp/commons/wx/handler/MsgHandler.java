@@ -27,7 +27,6 @@ public class MsgHandler extends AbstractHandler {
                                     WxCpService wxCpService, WxSessionManager wxSessionManager)
             throws WxErrorException {
 
-        System.out.println("wxCpXmlMessage.getContent = " + wxCpXmlMessage.getContent());
         String content = wxCpXmlMessage.getContent();
         //int agentId = wxCpXmlMessage.getAgentId();
 
@@ -69,7 +68,7 @@ public class MsgHandler extends AbstractHandler {
                 if (count<inCount)
                     returnContent = "你输入的数字大了！你继续猜！";
                 if (count == inCount){
-                    returnContent = "恭喜你才对了！";
+                    returnContent = "恭喜你猜对了！";
                     wxSession.removeAttribute("count");
                 }
             return WxCpXmlOutTextMessage.TEXT()

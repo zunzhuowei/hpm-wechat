@@ -11,7 +11,7 @@
     <script src="<@s.url '/js/jquery-1.8.3.min.js'/>" type="text/javascript"></script>
     <script src="<@s.url '/marry/js/bootstrap.min.js'/>" type="text/javascript"></script>
     <link rel="stylesheet" href="<@s.url '/marry/css/bootstrap.min.css'/>">
-
+    <link href="<@s.url '/css/weui.css'/>" rel="stylesheet"/>
     <style type="text/css">
         .png {
             width: 50px;
@@ -30,58 +30,18 @@
     </style>
 </head>
 <body>
-<div class="list-group" id="homeId">
-   <#-- <a href="#" class="list-group-item active">
-        <h3 class="list-group-item-heading hcenter">
-            <center>外包事业部</center>
-        </h3>
-    </a>-->
-
-    <#--<a href="/wait/thing/home" class="list-group-item">
-        <span class="badge">4</span> &lt;#&ndash; 有多少条代办的显示 &ndash;&gt;
-        <img src="/images/index_28.png" class="img-responsive png pull-left" style="margin-top:-4px;"
-        />
-        <h4 class="list-group-item-heading">
-            &nbsp;&nbsp;待办事宜
-        </h4>
-        <p class="list-group-item-text">
-            &nbsp;&nbsp;&nbsp;我的待办事宜
-        </p>
-
-    </a>
-    <a href="/self/info/home" class="list-group-item">
-        <h4 class="list-group-item-heading">
-            <img src="/images/index_31.png" class="img-responsive png pull-left" style="margin-top:-4px;"/>
-            &nbsp;&nbsp;我的信息
-        </h4>
-        <p class="list-group-item-text">
-            &nbsp;&nbsp;&nbsp;我的个人信息
-        </p>
-    </a>
-    <a href="/self/salary/home" class="list-group-item">
-        <h4 class="list-group-item-heading">
-            <img src="/images/1_03.png" class="img-responsive pull-left png img-circle" style="margin-top:-4px;"/>
-            &nbsp;&nbsp;我的薪酬
-        </h4>
-        <p class="list-group-item-text">
-            &nbsp;&nbsp;&nbsp;我的薪酬信息
-        </p>
-    </a>
-    <a href="/work/time/home" class="list-group-item">
-        <h4 class="list-group-item-heading">&nbsp;&nbsp;工时信息
-            <img src="/images/zuzhijiagou.png" class="img-responsive pull-left png img-circle"
-                 style="margin-top:-4px;"/>
-        </h4>
-        <p class="list-group-item-text">&nbsp;&nbsp;&nbsp;我的详细工时信息</p>
-    </a>
-    <a href="/check/work/home" class="list-group-item">
-        <h4 class="list-group-item-heading">&nbsp;&nbsp;我的考勤
-            <img src="/images/index_47.png" class="img-responsive pull-left png img-circle" style="margin-top:-4px;"/>
-        </h4>
-        <p class="list-group-item-text">&nbsp;&nbsp;&nbsp;我的考勤信息</p>
-    </a>-->
+<!--BEGIN toast-->
+<div id="toastload" style="display: inherit;">
+    <div class="weui-mask_transparent"></div>
+    <div class="weui-toast">
+        <i class="weui-loading weui-icon_toast"></i>
+        <p class="weui-toast__content">玩命加载中，请稍后...</p>
+    </div>
 </div>
-<div class="main_nav_bottom">
+
+<div class="list-group" id="homeId"></div>
+
+<div class="main_nav_bottom" style="display: none">
     <nav class="navbar navbar-default navbar-fixed-bottom" style="background-color: #337ab7">
         <div class="container" align="center">
             <style>
@@ -114,26 +74,40 @@
     //jQuery方法:var json = $.parseJSON(后台传后来的json串);
 
     $(document).ready(function(){
-        var jsonData = eval(${menuJson});
-        var h = "<a href=\"#\" class=\"list-group-item active\">\n"+
-                "        <h3 class=\"list-group-item-heading hcenter\">\n"+
-                "            <center>外包事业部</center>\n"+
-                "        </h3>\n"+
-                "    </a>";
-        for(var i = 0;i<jsonData.length;i++) {
-            h += "<a href=\""+jsonData[i].url+"\" class=\"list-group-item\">\n"+
-                    "        <h4 class=\"list-group-item-heading\">\n"+
-                    "            <img src=\""+jsonData[i].imgUrl+"\" class=\"img-responsive png pull-left\" " +
-                    "style=\"margin-top:-4px;\"/>\n"+
-                    "            &nbsp;&nbsp;"+jsonData[i].menuText+"\n"+
-                    "        </h4>\n"+
-                    "        <p class=\"list-group-item-text\">\n"+
-                    "            &nbsp;&nbsp;&nbsp;"+jsonData[i].menuDesc+"\n"+
-                    "        </p>\n"+
-                    "    </a>";
-        }
-
-        $("#homeId").html(h);
+        $.ajax({
+            type: "POST",
+            url: "/cp/msg/get/custom/menus",
+            cache: false,
+            data: {
+                A0100: '${user.A0100}'
+            },
+            success: function (data, status) {//成功！
+                var jsonData = eval(data);
+                //var h = "";
+                var h = "<a href=\"#\" class=\"list-group-item active\">\n"+
+                        "        <h3 class=\"list-group-item-heading hcenter\">\n"+
+                        "            <center>首页菜单</center>\n"+
+                        "        </h3>\n"+
+                        "    </a>";
+                for(var i = 0;i<jsonData.length;i++) {
+                    h += "<a href=\""+jsonData[i].url+"\" class=\"list-group-item\">\n"+
+                            "        <h4 class=\"list-group-item-heading\">\n"+
+                            "            <img src=\""+jsonData[i].imgUrl+"\" class=\"img-responsive png pull-left\" " +
+                            "style=\"margin-top:-4px;\"/>\n"+
+                            "            &nbsp;&nbsp;"+jsonData[i].menuText+"\n"+
+                            "        </h4>\n"+
+                            "        <p class=\"list-group-item-text\">\n"+
+                            "            &nbsp;&nbsp;&nbsp;"+jsonData[i].menuDesc+"\n"+
+                            "        </p>\n"+
+                            "    </a>";
+                }
+                $("#homeId").html(h);
+                $('#toastload').css("display", "none");
+            },
+            error: function (data, status) {//失败！
+                alert(data);
+            }
+        });
     });
 
 </script>

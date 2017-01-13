@@ -63,6 +63,14 @@ public class EvenHandler extends AbstractHandler {
                     .build();
         }
 
+        if (event.equals("view")) {//view事件不作处理
+            return WxCpXmlOutTextMessage.TEXT()
+                    .content("")
+                    .fromUser(wxCpXmlMessage.getToUserName())
+                    .toUser(wxCpXmlMessage.getFromUserName())
+                    .build();
+        }
+
         return WxCpXmlOutTextMessage.TEXT()
                 .content("你触发的事件是"+event+";你触发的的事件的key是:"+eventKey)
                 .fromUser(wxCpXmlMessage.getToUserName())

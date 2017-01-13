@@ -18,6 +18,7 @@ import java.util.Map;
  * To change this template use File|Default Setting
  * |Editor|File and Code Templates|Includes|File Header
  */
+@Deprecated
 @Component
 public class Oauth2handler extends AbstractHandler {
 

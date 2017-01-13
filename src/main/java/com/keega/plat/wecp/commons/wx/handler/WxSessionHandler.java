@@ -21,6 +21,7 @@ import java.util.Map;
  * To change this template use File|Default Setting
  * |Editor|File and Code Templates|Includes|File Header
  */
+@Deprecated
 @Component
 public class WxSessionHandler extends AbstractHandler {
 
@@ -46,7 +47,7 @@ public class WxSessionHandler extends AbstractHandler {
             if (count<inCount)
                 returnContent = "你输入的数字大了！你继续猜！";
             if (count == inCount)
-                returnContent = "恭喜你才对了！";
+                returnContent = "恭喜你猜对了！";
         } catch (NumberFormatException e) {
             returnContent = "你输入的是不是数字！";
         }

@@ -58,7 +58,7 @@
                                 <tr>
                                     <th colspan="2" style="text-align: center;"><#--  value="cn" -->
                                         <input id="sendDateId" class="mini-combobox" style="width:120px;" textField="sendDate" format="yyyy-MM-dd"
-                                               valueField="sendDate" emptyText="请选择发放日期..." url="../msg/get/date?A0100=${user.A0100}"
+                                               valueField="sendDate" emptyText="请选择发放日期..." url="${dateUrl}?A0100=${user.A0100}"
                                                required="false" allowInput="false" onvaluechanged="getSalaryByA0100"/>
                                     </th>
                                 </tr>
@@ -200,7 +200,7 @@
 		var salaryDate = this.getValue();
 
         $.ajax({
-            url: "../msg/get/salary",
+            url: "${getSalaryUrl}",
             type: "post",
             data: {
                 salaryDate: salaryDate,

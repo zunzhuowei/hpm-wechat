@@ -62,8 +62,9 @@ public class MenuConfig {
 
         WxMenuButton button23 = new WxMenuButton();
         button23.setType(WxConsts.BUTTON_VIEW);
-        button23.setName("企业wiki");
-        button23.setUrl("http://qydev.weixin.qq.com/wiki/index.php");
+        button23.setName("签到签退");
+        button23.setUrl(wxCpService.oauth2buildAuthorizationUrl
+                ("http://161818x71d.iask.in/cp/msg/to/map","state"));//http://qydev.weixin.qq.com/wiki/index.php
 
         WxMenuButton button24 = new WxMenuButton();
         button24.setType(WxConsts.BUTTON_VIEW);

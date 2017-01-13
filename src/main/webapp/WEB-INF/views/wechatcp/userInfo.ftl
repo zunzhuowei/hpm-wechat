@@ -52,7 +52,7 @@
         <div class="list-group">
             <a href="#" class="list-group-item">
                 <h4 class="list-group-item-heading">
-                    <img src="../images/index_04.png" class="img-responsive png pull-left" style="margin-top:-4px;"/>
+                    <img src="/images/index_04.png" class="img-responsive png pull-left" style="margin-top:-4px;"/>
                     &nbsp;&nbsp;xxx
                 </h4>
                 <p class="list-group-item-text">
@@ -65,7 +65,6 @@
         </div>
     </div>
 </div>
-
 <script type="text/javascript">
     //2、JSON字符串转换为Json对象
     //var myObject = eval('('+jsonStr+')');
@@ -87,7 +86,7 @@
         var end_p = "</p>";*/
 
         $.ajax({
-            url: "../msg/get/info",
+            url: "${ajaxUrl}",
             type: "post",
             data: {
                 A0100: "${user.A0100}"
@@ -95,6 +94,10 @@
             success: function (data) {
                 //var jsonData = eval("'"+data+"'");
                 var jsonData = JSON.parse(data);
+                var add = jsonData.address;
+                if (add == undefined) {
+                    add = "";
+                }
                 var sex = jsonData.sex;
                 if (sex == "1") sex = "男";
                 else if (sex == "2") sex = "女";
@@ -124,7 +127,7 @@
                         "                    身份证号："+jsonData.card+"\n" +
                         "                </p>\n" +
                         "                <p class=\"list-group-item\">\n" +
-                        "                    住址："+jsonData.address+"\n" +
+                        "                    住址："+add+"\n" +
                         "                </p>";
                 $("#user_info").html(h);
             }

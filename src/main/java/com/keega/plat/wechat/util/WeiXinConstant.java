@@ -12,8 +12,13 @@ public class WeiXinConstant {
 
 	public static final String URL = "https://sz.api.weixin.qq.com/cgi-bin/token?"
 			+ "grant_type=client_credential&appid=APPID&secret=APPSECRET";
+
 	public static final String APP_ID = "wxdac78f942674b126";
 	public static final String APP_SECRET = "b83ae895d39defe54a797f288c4ce2d1";
+
+	//public static final String APP_ID = "wx962a5670acb210d3";
+	//public static final String APP_SECRET = "25b99f311ed2a25cf3558dc83d22f817";
+
 	public static final String MENU_URL = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN";
 
 	/**

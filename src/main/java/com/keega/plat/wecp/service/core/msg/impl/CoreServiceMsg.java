@@ -89,7 +89,7 @@ public class CoreServiceMsg implements ICoreServiceMsg {
                 .event(WxConsts.EVT_SUBSCRIBE).handler(this.subscribeHandler)
                 .end();*/
         // 默认,转发消息给客服人员
-        newRouter.rule().async(false).msgType("text").content("授权").handler(oauth2handler).end();
+        //newRouter.rule().async(false).msgType("text").content("授权").handler(oauth2handler).end();
         newRouter.rule().async(false).msgType("text").handler(msgHandler).end();
         newRouter.rule().async(false).msgType("event").handler(evenHandler).end();
         this.router = newRouter;

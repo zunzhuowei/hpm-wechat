@@ -198,7 +198,9 @@
                     url: "/cp/msg/get/points",
                     cache: false,
                     data: {
-                        overlays: json
+                        overlays: json,
+                        A0100:"${user.A0100}",
+                        desc:"默认描述"
                     },
                     success: function (data, status) {//成功！
                         $('#loadingToast').css("display","none");
