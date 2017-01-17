@@ -59,4 +59,10 @@ public interface ICpSysUserDao extends IBaseDao{
      */
     Map<String, Object> getUserByOpenId(String openId) throws SQLException;
 
+    /**
+     * 当微信用户取消企业号的关注的时候，把微信找与Hr的绑定解除
+     * @param userId 微信企业号的userid
+     * @throws SQLException 异常
+     */
+    void unbundlingHrSysByUserId(String userId) throws SQLException;
 }

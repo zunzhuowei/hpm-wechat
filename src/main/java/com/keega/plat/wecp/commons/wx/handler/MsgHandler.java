@@ -10,6 +10,7 @@ import me.chanjar.weixin.cp.bean.WxCpXmlOutTextMessage;
 import org.apache.commons.lang3.RandomUtils;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.Map;
 
 /**
@@ -21,6 +22,9 @@ import java.util.Map;
  */
 @Component
 public class MsgHandler extends AbstractHandler {
+
+    @Resource
+    private WxCpService wxMsgCpService;
 
     @Override
     public WxCpXmlOutMessage handle(WxCpXmlMessage wxCpXmlMessage, Map<String, Object> map,
@@ -38,8 +42,11 @@ public class MsgHandler extends AbstractHandler {
              return WxCpXmlOutTextMessage.IMAGE().mediaId("mediaId").fromUser(wxCpXmlMessage.getToUserName())
              .toUser(wxCpXmlMessage.getFromUserName()).build();*/
 
-        if (null != content && content.contains("激活"))
-            return WxCpXmlOutTextMessage.TEXT().content("你是否要激活与hr系统绑定？")//回复的内容  测试加密消息
+        if (null != content && (content.contains("激活") || content.contains("绑定")
+                || content.toLowerCase().contains("hr")))
+            return WxCpXmlOutTextMessage.TEXT().content("点击链接启动后台激活与hr账号的绑定:" +
+                    wxMsgCpService.oauth2buildAuthorizationUrl
+                    ("http://161818x71d.iask.in/cp/msg/activation", "state"))
                     .fromUser(wxCpXmlMessage.getToUserName())
                     .toUser(wxCpXmlMessage.getFromUserName())
                     .build();

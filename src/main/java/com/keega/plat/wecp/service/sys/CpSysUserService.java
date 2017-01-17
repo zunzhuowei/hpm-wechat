@@ -46,4 +46,9 @@ public class CpSysUserService implements ICpSysUserService {
         return id != null;
     }
 
+    @Override
+    public void resetWeixinUserWithHr(String userId) throws SQLException {
+        cpSysUserDao.unbundlingHrSysByUserId(userId);
+    }
+
 }

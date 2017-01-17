@@ -259,9 +259,9 @@ public class MapService implements IMapService {
     }
 
     @Override
-    public String searchEmpCheckWorkInfoByDateAndA0100(String date, String A0100) throws SQLException, ParseException {
-        List<Map<String, Object>> infos = mapDao.getEmpCheckInfoByManagerDateAndA0100(date, A0100);
-        List<Map<String, Object>> userLists = mapDao.getEmpInfoListByManagerDateAndA0100(date, A0100);
+    public String searchEmpCheckWorkInfoByDateAndA0100(String date, String A0100,String empName) throws SQLException, ParseException {
+        List<Map<String, Object>> infos = mapDao.getEmpCheckInfoByManagerDateAndA0100(date, A0100,empName);
+        List<Map<String, Object>> userLists = mapDao.getEmpInfoListByManagerDateAndA0100(date, A0100,empName);
         Map<String, Object> map = new HashMap<String, Object>();
         List<Map<String, Object>> sw = new ArrayList<Map<String, Object>>();
         List<Map<String, Object>> xw = new ArrayList<Map<String, Object>>();
@@ -269,6 +269,24 @@ public class MapService implements IMapService {
             String status = info.get("status") + "";
             if ("1".equals(status)) xw.add(info);
             if ("0".equals(status)) sw.add(info);
+        }
+        map.put("sw", sw);
+        map.put("xw", xw);
+        map.put("users", userLists);
+        return JsonUtil.obj2json(map);
+    }
+
+    @Override
+    public String searchEmpMonthCheckList(String date, String A0100) throws SQLException, ParseException {
+        List<Map<String, Object>> infos = mapDao.getMonthCheckList(date,A0100);
+        List<Map<String, Object>> userLists = mapDao.getMonthRecordList(date,A0100);
+        Map<String, Object> map = new HashMap<String, Object>();
+        List<Map<String, Object>> sw = new ArrayList<Map<String, Object>>();
+        List<Map<String, Object>> xw = new ArrayList<Map<String, Object>>();
+        for (Map<String, Object> info : infos) {
+            String status = info.get("status") + "";
+            if ("0".equals(status)) sw.add(info);
+            if ("1".equals(status)) xw.add(info);
         }
         map.put("sw", sw);
         map.put("xw", xw);

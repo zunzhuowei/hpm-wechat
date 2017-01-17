@@ -96,11 +96,20 @@ public interface IMapService {
      * 根据日期，部门经理标志查询员工考勤信息
      * @param date yyyy.MM.dd  为空表示查询今天
      * @param A0100 部门经理id标志
+     * @param empName 员工姓名
      * @return json
      * @throws SQLException 异常
      */
-    String searchEmpCheckWorkInfoByDateAndA0100(String date,String A0100) throws SQLException, ParseException;
+    String searchEmpCheckWorkInfoByDateAndA0100(String date,String A0100,String empName) throws SQLException, ParseException;
 
+    /**
+     * 根据日期查询员工月度考勤列表
+     * @param date yyyy.MM.dd  为空表示查询当前月
+     * @param A0100 员工标志
+     * @return json
+     * @throws SQLException 异常
+     */
+    String searchEmpMonthCheckList(String date, String A0100) throws SQLException, ParseException;
     //String initEmpCheckWorkListName(String A0100);
 
 }

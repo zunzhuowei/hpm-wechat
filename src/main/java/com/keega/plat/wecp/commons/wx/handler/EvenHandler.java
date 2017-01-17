@@ -1,5 +1,6 @@
 package com.keega.plat.wecp.commons.wx.handler;
 
+import com.keega.plat.wecp.service.sys.ICpSysUserService;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.cp.api.WxCpService;
@@ -9,6 +10,8 @@ import me.chanjar.weixin.cp.bean.WxCpXmlOutNewsMessage;
 import me.chanjar.weixin.cp.bean.WxCpXmlOutTextMessage;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
+import java.sql.SQLException;
 import java.util.Map;
 
 /**
@@ -20,6 +23,9 @@ import java.util.Map;
 @Component
 public class EvenHandler extends AbstractHandler {
 
+    @Resource
+    private ICpSysUserService cpSysUserService;
+
     @Override
     public WxCpXmlOutMessage handle(WxCpXmlMessage wxCpXmlMessage, Map<String, Object> map,
                                     WxCpService wxCpService, WxSessionManager wxSessionManager)
@@ -29,16 +35,16 @@ public class EvenHandler extends AbstractHandler {
         String eventKey = wxCpXmlMessage.getEventKey();
 
         WxCpXmlOutNewsMessage.Item  item = new WxCpXmlOutNewsMessage.Item();
-        item.setTitle("测试标题");
-        item.setDescription("测试描述");
-        item.setUrl("www.baidu.com");
-        item.setPicUrl("https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1482681297&di=26c53323acd7251304107282a07e4acd&src=http://g.hiphotos.baidu.com/image/pic/item/f3d3572c11dfa9ecfc13ccc066d0f703918fc12c.jpg");
+        item.setTitle("欢迎来到keega软件");
+        item.setDescription("welcome to keega soft !");
+        item.setUrl("http://161818x71d.iask.in/cp/msg/info");
+        item.setPicUrl("http://ds.devstore.cn/20151125/1448419922203/QQ%BD%D8%CD%BC20151125104441.png");
 
-        /*if (event.equals("enter_agent") || event.equals("LOCATION"))
-        return WxCpXmlOutTextMessage.NEWS().fromUser(wxCpXmlMessage.getToUserName())
-                .toUser(wxCpXmlMessage.getFromUserName()).addArticle(item)
-                .build();*/
-
+        /*if ("click".equals(event)) {
+            return WxCpXmlOutTextMessage.NEWS().fromUser(wxCpXmlMessage.getToUserName())
+                    .toUser(wxCpXmlMessage.getFromUserName()).addArticle(item)
+                    .build();
+        }*/
 
         if ("click".equals(event) && "salary".equals(eventKey)) {//点击查询我的薪资
             return WxCpXmlOutTextMessage.TEXT()
@@ -68,6 +74,26 @@ public class EvenHandler extends AbstractHandler {
                     .content("")
                     .fromUser(wxCpXmlMessage.getToUserName())
                     .toUser(wxCpXmlMessage.getFromUserName())
+                    .build();
+        }
+
+        if (event.equals("unsubscribe")){//取消关注的时候应该对该用户进行清空hr账号的绑定。
+            try {
+                System.out.println("用户:"+wxCpXmlMessage.getFromUserName()+"取消了企业号的订阅!");
+                cpSysUserService.resetWeixinUserWithHr(wxCpXmlMessage.getFromUserName());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (event.equals("subscribe")) {//关注企业号，并且认证成功之后。
+            /*return WxCpXmlOutTextMessage.TEXT()
+                    .content("恭喜您已经成功关注keega软件企业号！")
+                    .toUser(wxCpXmlMessage.getFromUserName())
+                    .fromUser(wxCpXmlMessage.getToUserName())
+                    .build();*/
+            return WxCpXmlOutTextMessage.NEWS().fromUser(wxCpXmlMessage.getToUserName())
+                    .toUser(wxCpXmlMessage.getFromUserName()).addArticle(item)
                     .build();
         }
 

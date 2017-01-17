@@ -107,4 +107,28 @@ public class ViewsService implements IViewsService {
         return JsonUtil.obj2json(menus);
     }
 
+    @Override
+    public String secondBindHr(String openId, String account, String password, HttpSession session) throws SQLException, WxErrorException {
+        if ("".equals(password)) password = null;
+        Map<String,Object> sysOpenId = cpsysUserService.getOpenIdByAccPss(account, password);
+        if (sysOpenId == null || sysOpenId.get("openid") == null) {//说明这个用户不存在
+            return "04";//密码或者账号错误！
+        }
+        if (!"default_id".equals(sysOpenId.get("openid"))) {//说明已经有openId绑定了。
+            return "03";//已经绑定了
+        }
+        if ("default_id".equals(sysOpenId.get("openid"))){//如果没有绑定
+            if (cpsysUserService.checkWeChatUserBindSysByOpenId(openId)) {
+                return "05";//说明该微信账号已经绑定过账号了，不能再绑定了。
+            }
+            cpsysUserService.bindHrSysUser(openId,account);
+            session.setAttribute("user",cpsysUserService.getSysUserByCpUserId(openId));
+            //https://qyapi.weixin.qq.com/cgi-bin/user/authsucc?access_token=ACCESS_TOKEN&userid=USERID
+            //String url = "https://qyapi.weixin.qq.com/cgi-bin/user/authsucc?userid=" + userId;
+            wxMsgCpService.userAuthenticated(openId);//返回给微信服务器
+            return "01";//绑定成功
+        }
+        return "02";//绑定失败
+    }
+
 }

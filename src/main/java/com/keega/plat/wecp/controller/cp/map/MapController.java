@@ -55,12 +55,32 @@ public class MapController {
         return "/views/wechatcp/map/points2map";
     }
 
-    @RequestMapping(value = "/msg/show/check/list", method = RequestMethod.GET)
+    //员工考勤列表1
+    /*@RequestMapping(value = "/msg/show/check/list", method = RequestMethod.GET)
     public String showEmployeeCheckInfo() {
         //1.菜单验证经理身份才能显示这个菜单。
         //2.其次，需要验证数据库经理身份，才能进入，防止直接用url登录。
         //3.查看经理查看范围权限。
         return "/views/wechatcp/map/checklist";
+    }*/
+
+    //员工考勤列表2
+    @RequestMapping(value = "/msg/emp/checks",method = RequestMethod.GET)
+    public String showEmpCheckWorkInfo(@RequestParam(name = "code",required = false) String code,
+                                       Model model,HttpSession session) throws WxErrorException, SQLException {
+        String page = viewsService.redirect2OauthPage(code, model, session);
+        if (page != null) return page;
+        return "/views/wechatcp/map/checklist2";
+    }
+
+    //员工个人月度账单
+    @RequestMapping(value = "/msg/emp/monthlist",method = RequestMethod.GET)
+    public String showEmpMonthChekcList(@RequestParam(name = "A0100") String A0100,
+                                        @RequestParam(name = "A0101") String A0101,
+                                        Model model){
+        model.addAttribute("A0100", A0100);
+        model.addAttribute("A0101", A0101);
+        return "/views/wechatcp/map/monthlist";
     }
 
     @ResponseBody//员工签到/签退的地址
@@ -94,11 +114,20 @@ public class MapController {
         return mapService.checkSignInfo(A0100);
     }
 
-    @ResponseBody
+    @ResponseBody//查询员工考勤列表Ajax
     @RequestMapping(value = "/msg/get/check/work/infos", method = RequestMethod.POST)
     public String getEmpCheckWorkInfos(@RequestParam(name = "date",required = false) String date,
+                                       @RequestParam(name = "empName",required = false) String empName,
                                        @RequestParam(name = "A0100") String A0100) throws SQLException, ParseException {
-        return mapService.searchEmpCheckWorkInfoByDateAndA0100(date, A0100);
+        System.out.println("date = " + date);
+        return mapService.searchEmpCheckWorkInfoByDateAndA0100(date, A0100,empName);
+    }
+
+    @ResponseBody//查询员工月度考勤列表Ajax
+    @RequestMapping(value = "/msg/get/check/work/month", method = RequestMethod.POST)
+    public String getEmpMonthCheckWorkInfos(@RequestParam(name = "date",required = false) String date,
+                                       @RequestParam(name = "A0100") String A0100) throws SQLException, ParseException {
+        return mapService.searchEmpMonthCheckList(date, A0100);
     }
 
 }

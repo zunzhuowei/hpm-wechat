@@ -61,27 +61,35 @@ public class MenuConfig {
                 ("http://161818x71d.iask.in/cp/msg/salary", "state"));
 
         WxMenuButton button23 = new WxMenuButton();
-        button23.setType(WxConsts.BUTTON_VIEW);
+        /*button23.setType(WxConsts.BUTTON_VIEW);
         button23.setName("签到签退");
         button23.setUrl(wxCpService.oauth2buildAuthorizationUrl
-                ("http://161818x71d.iask.in/cp/msg/to/map","state"));//http://qydev.weixin.qq.com/wiki/index.php
+                ("http://161818x71d.iask.in/cp/msg/to/map","state"));*///http://qydev.weixin.qq.com/wiki/index.php
+        button23.setType(WxConsts.BUTTON_CLICK);
+        button23.setName("使用帮助");
+        button23.setKey("help");
 
-        WxMenuButton button24 = new WxMenuButton();
+
+       /* WxMenuButton button24 = new WxMenuButton();
         button24.setType(WxConsts.BUTTON_VIEW);
         button24.setName("绑定HR");
         button24.setUrl(wxCpService.oauth2buildAuthorizationUrl
-                ("http://161818x71d.iask.in/cp/msg/activation", "state"));
+                ("http://161818x71d.iask.in/cp/msg/activation", "state"));*/
 
         button2.getSubButtons().add(button21);
         button2.getSubButtons().add(button22);
         button2.getSubButtons().add(button221);
         button2.getSubButtons().add(button23);
-        button2.getSubButtons().add(button24);
+        //button2.getSubButtons().add(button24);
 
         WxMenuButton button3 = new WxMenuButton();
-        button3.setType(WxConsts.BUTTON_CLICK);
+        /*button3.setType(WxConsts.BUTTON_CLICK);
         button3.setName("使用帮助");
-        button3.setKey("help");
+        button3.setKey("help");*/
+        button3.setType(WxConsts.BUTTON_VIEW);
+        button3.setName("签到签退");
+        button3.setUrl(wxCpService.oauth2buildAuthorizationUrl
+                ("http://161818x71d.iask.in/cp/msg/to/map","state"));
 
         menu.getButtons().add(button1);
         menu.getButtons().add(button2);

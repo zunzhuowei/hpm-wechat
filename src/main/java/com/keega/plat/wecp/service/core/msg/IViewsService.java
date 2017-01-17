@@ -51,4 +51,14 @@ public interface IViewsService {
      * @return MenuConfig 的json
      */
     String getCustomMenus(String a0100, List<MenuConfig> menus) throws SQLException;
+
+    /**
+     * 微信成员关注之后，二次验证（此处相当于把绑定hr系统动作放到微信二次验证了。）
+     * @param openId 微信用户的openId
+     * @param account hr账号
+     * @param password hr密码
+     * @param session HttpSession
+     * @return 绑定操作的相应结果
+     */
+    String secondBindHr(String openId, String account, String password, HttpSession session) throws SQLException, WxErrorException;
 }

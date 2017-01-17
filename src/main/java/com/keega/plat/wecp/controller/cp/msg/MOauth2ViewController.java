@@ -120,6 +120,24 @@ public class MOauth2ViewController {
         return viewsService.bindHr(openId, account, password,session);
     }
 
+    //微信二次验证入口
+    @RequestMapping(value = "/msg/second/activation", method = RequestMethod.GET)
+    public String secondActivation(@RequestParam(name = "code") String code,Model model) throws WxErrorException {
+        String userId = viewsService.getOauth2UserInfoIdByCode(code);
+        model.addAttribute("userId", userId);
+        return "/views/wechatcp/oauth/secondOauth2";
+    }
+
+    //微信二次验证Ajax数据提交方法
+    @ResponseBody
+    @RequestMapping(value = "/msg/try/second/act",method = RequestMethod.POST)
+    public String secondActivation(@RequestParam(name = "openId") String openId,
+                                   @RequestParam(name = "account") String account,
+                                   @RequestParam(name = "password") String password,
+                                   HttpSession session) throws SQLException, WxErrorException {
+        return viewsService.secondBindHr(openId, account, password,session);
+    }
+
     //激活成功之后登陆到的页面
     @RequestMapping(value = "/msg/ac/su",method = RequestMethod.GET)
     public String activationSuccessPage(HttpSession session, Model model) throws SQLException {
@@ -130,12 +148,5 @@ public class MOauth2ViewController {
         }
     }
 
-    @RequestMapping(value = "/msg/emp/checks",method = RequestMethod.GET)
-    public String showEmpCheckWorkInfo(@RequestParam(name = "code",required = false) String code,
-                                       Model model,HttpSession session) throws WxErrorException, SQLException {
-        String page = viewsService.redirect2OauthPage(code, model, session);
-        if (page != null) return page;
-        return "/views/wechatcp/map/checklist";
-    }
 
 }

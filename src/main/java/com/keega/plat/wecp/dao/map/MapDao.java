@@ -245,35 +245,76 @@ public class MapDao implements IMapDao {
     }
 
     @Override
-    public List<Map<String, Object>> getEmpCheckInfoByManagerDateAndA0100(String date, String A0100) throws SQLException, ParseException {
-        if (date == null) date = simpleDateFormat.format(new Date());
+    public List<Map<String, Object>> getEmpCheckInfoByManagerDateAndA0100(String date, String A0100,String empName) throws SQLException, ParseException {
+        if (date == null || "".equals(date)) date = simpleDateFormat.format(new Date());
         date = simpleDateFormat.format(simpleDateFormat.parse(date));
+        if (empName == null) empName = "";
         String sql = "select A0100,A0101," +
                 "(select codeitemdesc from organization where codeitemid=B0110) as B0110 ," +
                 "(select codeitemdesc from organization where codeitemid=E0122) as E0122," +
                 "(select codeitemdesc from organization where codeitemid=E01A1) as E01A1," +
-                "location,card_no,work_date,work_time,zuobiao,liyou,status" +
+                " location,card_no,work_date,work_time,zuobiao,liyou,status" +
                 " from kq_originality_data where work_date=? and status='1'" +
+                " and A0101 like '%"+empName+"%'" +
                 " and B0110=(select B0110 from UsrA01 where A0100 =?) union all\n" +
-                " select A0100,A0101,B0110,E0122,E01A1,location,card_no,work_date,work_time,zuobiao,liyou,status" +
+                " select A0100,A0101," +
+                "(select codeitemdesc from organization where codeitemid=B0110) as B0110 ," +
+                "(select codeitemdesc from organization where codeitemid=E0122) as E0122," +
+                "(select codeitemdesc from organization where codeitemid=E01A1) as E01A1," +
+                " location,card_no,work_date,work_time,zuobiao,liyou,status" +
                 " from kq_originality_data where work_date=? and status='0' " +
+                " and A0101 like '%"+empName+"%'" +
                 " and B0110=(select B0110 from UsrA01 where A0100 =?)";
-        return Dal.map().queryList(sql, new Object[]{date, A0100, date, A0100});
+        return Dal.map().queryList(sql, new Object[]{date, A0100, date,A0100});
     }
 
     @Override
-    public List<Map<String, Object>> getEmpInfoListByManagerDateAndA0100(String date, String A0100) throws SQLException, ParseException {
-        if (date == null) date = simpleDateFormat.format(new Date());
+    public List<Map<String, Object>> getEmpInfoListByManagerDateAndA0100(String date, String A0100,String empName) throws SQLException, ParseException {
+        if (date == null || "".equals(date)) date = simpleDateFormat.format(new Date());
         date = simpleDateFormat.format(simpleDateFormat.parse(date));
+        if (empName == null) empName = "";
         String sql = "select  A0100,A0101," +
                 " (select codeitemdesc from organization where codeitemid=B0110) as B0110 ," +
                 " (select codeitemdesc from organization where codeitemid=E0122) as E0122 ," +
                 " (select codeitemdesc from organization where codeitemid=E01A1) as E01A1 " +
                 " from kq_originality_data" +
                 " where work_date=? and B0110=(select B0110 from UsrA01 where A0100 =?)" +
+                " and A0101 like '%"+empName+"%'" +
                 "  group by A0100,A0101,B0110,E0122,E01A1";
         return Dal.map().queryList(sql, new Object[]{date, A0100});
+    }
 
+    @Override
+    public List<Map<String, Object>> getMonthCheckList(String date, String A0100) throws SQLException, ParseException {
+        if (date == null || "".equals(date)) date = simpleDateFormat.format(new Date());
+        date = simpleDateFormat.format(simpleDateFormat.parse(date));
+        String sql = "select A0100,A0101, " +
+                " (select codeitemdesc from organization where codeitemid=B0110) as B0110 ," +
+                " (select codeitemdesc from organization where codeitemid=E0122) as E0122," +
+                " (select codeitemdesc from organization where codeitemid=E01A1) as E01A1," +
+                " location,card_no,work_date,work_time,zuobiao,liyou,status" +
+                " from kq_originality_data " +
+                " where " +
+                " A0100 = ? " +
+                " and LEFT(work_date,7)= LEFT('"+date+"',7)";
+        return Dal.map().queryList(sql,new Object[]{A0100});
+    }
+
+    @Override
+    public List<Map<String, Object>> getMonthRecordList(String date, String A0100) throws SQLException, ParseException {
+        if (date == null || "".equals(date)) date = simpleDateFormat.format(new Date());
+        date = simpleDateFormat.format(simpleDateFormat.parse(date));
+        String sql = "select A0100,A0101, \n" +
+                " (select codeitemdesc from organization where codeitemid=B0110) as B0110 ,\n" +
+                " (select codeitemdesc from organization where codeitemid=E0122) as E0122,\n" +
+                " (select codeitemdesc from organization where codeitemid=E01A1) as E01A1,\n" +
+                " work_date\n" +
+                " from kq_originality_data \n" +
+                " where \n" +
+                " A0100 = ? \n" +
+                " and LEFT(work_date,7)= LEFT('"+date+"',7)\n" +
+                " group by A0100,A0101,B0110,E0122,E01A1,work_date";
+        return Dal.map().queryList(sql,new Object[]{A0100});
     }
 
 }

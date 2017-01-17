@@ -100,7 +100,7 @@ public interface IMapDao {
      * @return 员工的考勤信息
      * @throws SQLException 异常
      */
-    List<Map<String, Object>> getEmpCheckInfoByManagerDateAndA0100(String date,String A0100) throws SQLException, ParseException;
+    List<Map<String, Object>> getEmpCheckInfoByManagerDateAndA0100(String date,String A0100,String empName) throws SQLException, ParseException;
 
     /**
      * 根据部门经理A0100和日期查询参加考勤的岗位职位信息等
@@ -109,5 +109,24 @@ public interface IMapDao {
      * @return 员工岗位信息列表
      * @throws SQLException 异常
      */
-    List<Map<String, Object>> getEmpInfoListByManagerDateAndA0100(String date, String A0100) throws SQLException, ParseException;
+    List<Map<String, Object>> getEmpInfoListByManagerDateAndA0100(String date, String A0100,String empName) throws SQLException, ParseException;
+
+    /**
+     * 员工月度考勤列表
+     * @param date yyyy.MM.dd 如果未空表示查当前月
+     * @param A0100 员工标志
+     * @return 某个员工月度考勤信息
+     * @throws SQLException 异常
+     */
+    List<Map<String,Object>> getMonthCheckList(String date,String A0100) throws SQLException, ParseException;
+
+    /**
+     * 员工月度考勤刷卡记录表
+     * @param date yyyy.MM.dd 如果未空表示查当前月
+     * @param A0100 员工标志
+     * @return 某个员工月度考勤刷卡记录表
+     * @throws SQLException 异常
+     */
+    List<Map<String,Object>> getMonthRecordList(String date,String A0100) throws SQLException, ParseException;
+
 }

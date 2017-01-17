@@ -62,5 +62,11 @@ public class CpSysUserDao implements ICpSysUserDao {
         return Dal.map().query(sql, openId);
     }
 
+    @Override
+    public void unbundlingHrSysByUserId(String userId) throws SQLException {
+        String sql = "update UsrA01 set openid=? where openid=?";
+        Dal.upd().excute(sql, "default_id", userId);
+    }
+
 
 }

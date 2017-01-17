@@ -47,4 +47,11 @@ public interface ICpSysUserService {
      * @throws SQLException 异常
      */
     boolean checkWeChatUserBindSysByOpenId(String openid) throws SQLException;
+
+    /**
+     * 重置微信用户与hr之间的绑定
+     * @param userId 微信用户id
+     * @throws SQLException 异常
+     */
+    void resetWeixinUserWithHr(String userId) throws SQLException;
 }
