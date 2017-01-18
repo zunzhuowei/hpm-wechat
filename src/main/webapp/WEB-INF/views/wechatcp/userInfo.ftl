@@ -37,7 +37,7 @@
     <div class="row">
         <div class="list-group">
             <a class="list-group-item active">
-                <input type="button" class="btn btn-primary pull-left"
+                <input type="button" class="btn btn-primary pull-left" id="goBack" style="display: none;"
                        onclick="JavaScript:history.go(-1);" value="返回"/>
                 <#--<input type="button" class="btn btn-primary pull-right" value="刷新"/>-->
                 <h3 class="list-group-item-heading">
@@ -82,8 +82,10 @@
     mini.parse();
 
     $(document).ready(function(){
-       /* var start_p = "<p class=\"list-group-item\">";
-        var end_p = "</p>";*/
+        var code = '${code}';
+        if(code == "") {
+            $('#goBack').css("display", "inherit");
+        }
 
         $.ajax({
             url: "${ajaxUrl}",
@@ -115,10 +117,10 @@
                         "                    工号："+jsonData.number+"\n" +
                         "                </p>\n" +
                         "                <p class=\"list-group-item\">\n" +
-                        "                    部门：${user.E0122}\n" +
+                        "                    部门：${user.bumen}\n" +
                         "                </p>\n" +
                         "                <p class=\"list-group-item\">\n" +
-                        "                    岗位：${user.E01A1}\n" +
+                        "                    岗位：${user.gangwei}\n" +
                         "                </p>\n" +
                         "                <p class=\"list-group-item\">\n" +
                         "                    联系电话："+jsonData.tel+"\n" +

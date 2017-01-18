@@ -34,7 +34,7 @@
 		<div class="row">
 			<div class="list-group">
 				<a class="list-group-item active">
-					<input type="button" class="btn btn-primary pull-left"
+					<input type="button" class="btn btn-primary pull-left" id="goBack" style="display: none;"
 						   onclick="JavaScript:history.go(-1);" value="返回"/>
 					<#--<input type="button" class="btn btn-primary pull-right" value="刷新"/>-->
 					<h3 class="list-group-item-heading">
@@ -195,6 +195,11 @@
 	</div>
 <script type="text/javascript">
     mini.parse();
+
+    var code = '${code}';
+    if(code == "") {
+        $('#goBack').css("display", "inherit");
+	}
 
     function getSalaryByA0100() {
 		var salaryDate = this.getValue();

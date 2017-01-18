@@ -81,11 +81,15 @@ public class WxConfigInit {
         List<String> names = new ArrayList<String>();
         for (int i = 0; i < fields.size(); i++) {
             if ("B0110".equals(fields.get(i).attributeValue("name"))) {
-                names.add("(select codeitemdesc from organization where codeitemid=B0110) as B0110");
+                //鉴于有时候需要中文名字，有事需要代码项，所以两个都放到session
+                names.add("(select codeitemdesc from organization where codeitemid=B0110) as danwei");
+                names.add(fields.get(i).attributeValue("name"));
             }else if ("E0122".equals(fields.get(i).attributeValue("name"))) {
-                names.add("(select codeitemdesc from organization where codeitemid=E0122) as E0122");
+                names.add("(select codeitemdesc from organization where codeitemid=E0122) as bumen");
+                fields.get(i).attributeValue("name");
             } else if ("E01A1".equals(fields.get(i).attributeValue("name"))) {
-                names.add("(select codeitemdesc from organization where codeitemid=E01A1) as E01A1");
+                names.add("(select codeitemdesc from organization where codeitemid=E01A1) as gangwei");
+                fields.get(i).attributeValue("name");
             } else {
                 names.add(fields.get(i).attributeValue("name"));
             }

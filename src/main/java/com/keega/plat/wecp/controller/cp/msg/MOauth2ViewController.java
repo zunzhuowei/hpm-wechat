@@ -53,6 +53,14 @@ public class MOauth2ViewController {
         return "/views/wechatcp/home";
     }
 
+    //用于返回首页
+    @RequestMapping(value = "/msg/back/home",method = RequestMethod.GET)
+    public String backHome(HttpSession session) {
+        Map<String,Object> user = (Map<String, Object>) session.getAttribute("user");
+        if (user == null) return "/views/error/404";
+        return "/views/wechatcp/home";
+    }
+
     //异步获取不同角色该有的菜单
     @ResponseBody
     @RequestMapping(value = "/msg/get/custom/menus", method = RequestMethod.POST)
@@ -67,6 +75,7 @@ public class MOauth2ViewController {
         String page = viewsService.redirect2OauthPage(code, model, session);
         if (page != null) return page;
         model.addAttribute("ajaxUrl", "/cp/msg/get/info");
+        model.addAttribute("code", code);
         return "/views/wechatcp/userInfo";
     }
 
@@ -85,6 +94,7 @@ public class MOauth2ViewController {
         if (page != null) return page;
         model.addAttribute("dateUrl", "/cp/msg/get/date");
         model.addAttribute("getSalaryUrl", "/cp/msg/get/salary");
+        model.addAttribute("code", code);
         return "/views/wechatcp/salary";
     }
 

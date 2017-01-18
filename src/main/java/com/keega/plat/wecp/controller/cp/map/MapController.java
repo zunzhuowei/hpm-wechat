@@ -64,7 +64,7 @@ public class MapController {
         return "/views/wechatcp/map/checklist";
     }*/
 
-    //员工考勤列表2
+    //员工考勤列表2(与员工个人月度考勤)
     @RequestMapping(value = "/msg/emp/checks",method = RequestMethod.GET)
     public String showEmpCheckWorkInfo(@RequestParam(name = "code",required = false) String code,
                                        Model model,HttpSession session) throws WxErrorException, SQLException {
@@ -73,14 +73,30 @@ public class MapController {
         return "/views/wechatcp/map/checklist2";
     }
 
-    //员工个人月度账单
+    //员工个人月度考勤(因此方法无jqm缓存，已集成到checklist2.jsp页面中了)
+    @Deprecated
     @RequestMapping(value = "/msg/emp/monthlist",method = RequestMethod.GET)
     public String showEmpMonthChekcList(@RequestParam(name = "A0100") String A0100,
                                         @RequestParam(name = "A0101") String A0101,
                                         Model model){
         model.addAttribute("A0100", A0100);
         model.addAttribute("A0101", A0101);
-        return "/views/wechatcp/map/monthlist";
+        if (true) return "/views/error/404";
+        return "/views/wechatcp/map/monthlist";//已启用
+    }
+
+    //请假的主页（主菜单）
+    @RequestMapping(value = "/msg/emp/leave/home",method = RequestMethod.GET)
+    public String go2LeaveHome() {
+
+        return "/views/wechatcp/map/leavehome";
+    }
+
+    //前往请假表单填写
+    @RequestMapping(value = "/msg/emp/leave/form",method = RequestMethod.GET)
+    public String go2LeaveForm() {//TODO 需要判断是否session中是否有user
+
+        return "/views/wechatcp/map/leaveform";
     }
 
     @ResponseBody//员工签到/签退的地址
@@ -128,6 +144,14 @@ public class MapController {
     public String getEmpMonthCheckWorkInfos(@RequestParam(name = "date",required = false) String date,
                                        @RequestParam(name = "A0100") String A0100) throws SQLException, ParseException {
         return mapService.searchEmpMonthCheckList(date, A0100);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/msg/leave/form/submit", method = RequestMethod.POST)
+    public String submitLeaveForm(String name,String date) {//response
+        System.out.println("name = " + name);
+        System.out.println("date = " + date);
+        return "";
     }
 
 }

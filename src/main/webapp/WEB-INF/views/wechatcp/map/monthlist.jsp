@@ -23,7 +23,7 @@
 <body>
 <div data-role="page" id="monthList">
     <div data-role="header"><!-- /cp/msg/emp/checks -->
-        <a href="/cp/msg/emp/checks" class="ui-btn ui-corner-all ui-shadow ui-icon-back ui-btn-icon-left">返回</a>
+        <a href="/cp/msg/emp/checks" rel='external' class="ui-btn ui-corner-all ui-shadow ui-icon-back ui-btn-icon-left">返回</a>
         <h1>${A0101}月度考勤列表</h1>
     </div>
 
@@ -59,9 +59,9 @@
     <script>
 
         $(document).on('pagecreate','#monthList',function () {
-            var shangwu;
-            var xiawu;
-            var userList;
+            var shangwuMonthList;
+            var xiawuMonthList;
+            var userListMonthList;
 
             $.ajax({//获取员工考勤信息
                 type: "POST",
@@ -72,23 +72,23 @@
                 },
                 success: function (data, status) {//成功！
                     var json = $.parseJSON(data);
-                    userList = json.users;
-                    shangwu = json.sw;
-                    xiawu = json.xw;
+                    userListMonthList = json.users;
+                    shangwuMonthList = json.sw;
+                    xiawuMonthList = json.xw;
                     alert("monthList"+json);
-                    init(userList);
+                    initMonthList(userListMonthList);
                 },
                 error: function (data, status) {//失败！
                     alert("获取考勤数据失败，错误代码："+data);
                 }
             });
 //////////////////////////////////////////////////////////////////////////////////////
-            function init(userList) {
+            function initMonthList(userList) {
                 var div = "";
                 for (var i=0;i<userList.length;i++) {
                     var u = userList[i];
-                    var sw = getShangWuInfo(u.work_date);
-                    var xw = getXiaWu(u.work_date);
+                    var sw = getShangWuInfoMonthList(u.work_date);
+                    var xw = getXiaWuMonthList(u.work_date);
 
                     div = div + "<div class=\"weui-panel__bd\">" +
                             "<div class=\"weui-media-box weui-media-box_text\">" +
@@ -148,38 +148,38 @@
                 $('#searchDivMonthList').hide();
             });
 
-            function getShangWuInfo(workDate) {
+            function getShangWuInfoMonthList(workDate) {
                 var obj;
-                for (var i=0;i<shangwu.length;i++) {
-                    if (shangwu[i].work_date == workDate) {
-                        obj = shangwu[i];
+                for (var i=0;i<shangwuMonthList.length;i++) {
+                    if (shangwuMonthList[i].work_date == workDate) {
+                        obj = shangwuMonthList[i];
                         break;
                     }
                 }
                 return obj;
             }
-            function getXiaWu(workDate) {
+            function getXiaWuMonthList(workDate) {
                 var obj;
-                for (var i=0;i<xiawu.length;i++) {
-                    if (xiawu[i].work_date == workDate) {
-                        obj = xiawu[i];
+                for (var i=0;i<xiawuMonthList.length;i++) {
+                    if (xiawuMonthList[i].work_date == workDate) {
+                        obj = xiawuMonthList[i];
                         break;
                     }
                 }
                 return obj;
             }
 
-            var $iosActionsheet = $('#iosActionsheetMonthList');
-            var $iosMask = $('#iosMaskMonthList');
+            var $iosActionsheetMonthList = $('#iosActionsheetMonthList');
+            var $iosMaskMonthList = $('#iosMaskMonthList');
 
-            function hideActionSheet() {
-                $iosActionsheet.removeClass('weui-actionsheet_toggle');
-                $iosMask.fadeOut(200);
+            function hideActionSheetMonthList() {
+                $iosActionsheetMonthList.removeClass('weui-actionsheet_toggle');
+                $iosMaskMonthList.fadeOut(200);
             }
 
-            $iosMask.on('click', hideActionSheet);
+            $iosMaskMonthList.on('click', hideActionSheetMonthList);
             $('#iosActionsheetCancelMonthList').on('click', function () {
-                hideActionSheet();
+                hideActionSheetMonthList();
             });
         });
     </script>
