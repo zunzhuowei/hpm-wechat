@@ -26,19 +26,67 @@
     <div data-role="header"> <!-- javascript:history.go(-1); rel='external' -->
         <a href="/cp/msg/emp/leave/home" class="ui-btn ui-corner-all ui-shadow ui-icon-back ui-btn-icon-left">返回</a>
         <h1>员工请假表单</h1>
-        <%--<a href="#" class="ui-btn ui-corner-all ui-shadow ui-icon-home ui-btn-icon-left"
-           id="goback2home">主页</a>--%>
+        <a href="#" class="ui-btn ui-corner-all ui-shadow ui-icon-action ui-btn-icon-right"
+           id="submitQj">提交申请</a>
     </div>
 
     <div data-role="main" class="ui-content">
         <div class="page__bd">
-            <form method="post" action="/cp/msg/leave/form/submit">
-                <label for="fname" class="ui-hidden-accessible">姓名：</label>
-                <input type="text" name="name" id="fname" data-clear-btn="true" placeholder="姓名...">
-                <label for="date">Date:</label>
-                <input name="date" id="date" value="" class="required" type="date">
-                <input type="submit" data-inline="true" value="提交">
-            </form>
+            <div class="weui-cells weui-cells_form">
+                <div class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <div class="weui-cell">
+                            <div class="weui-cell__bd">
+                                <div class="weui-cell__hd"><label class="weui-label">申请人姓名:</label></div>
+                                <input class="weui-input" type="text" value="${user.A0101}" disabled="disabled" placeholder="请输入姓名..."/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-block-b">
+                        <div class="weui-cell">
+                            <div class="weui-cell__bd">
+                                <div class="weui-cell__hd"><label class="weui-label">审核人姓名:</label></div>
+                                <input class="weui-input" type="text" disabled="disabled" placeholder="请输入姓名..."/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="weui-cell">
+                    <fieldset data-role="controlgroup" data-type="horizontal">
+                        <legend>请假类型:</legend>
+                        <input name="radio-choice-h-2" id="radio-choice-h-2a" value="" checked="checked" type="radio">
+                        <label for="radio-choice-h-2a">事假</label>
+                        <input name="radio-choice-h-2" id="radio-choice-h-2b" value="" type="radio">
+                        <label for="radio-choice-h-2b">年假</label>
+                        <input name="radio-choice-h-2" id="radio-choice-h-2c" value="" type="radio">
+                        <label for="radio-choice-h-2c">产假</label>
+                        <input name="radio-choice-h-2" id="radio-choice-h-2d" value=""  type="radio">
+                        <label for="radio-choice-h-2d">哺乳假</label>
+                        <input name="radio-choice-h-2" id="radio-choice-h-2e" value=""  type="radio">
+                        <label for="radio-choice-h-2e">婚假</label>
+                        <input name="radio-choice-h-2" id="radio-choice-h-2f" value=""  type="radio">
+                        <label for="radio-choice-h-2f">丧假</label>
+                    </fieldset>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <div class="weui-cell__hd"><label class="weui-label">请假开始时间:</label></div>
+                        <input class="weui-input" type="datetime-local" data-clear-btn="true" value="" placeholder="开始时间..."/>
+                    </div>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <div class="weui-cell__hd"><label class="weui-label">请假结束时间:</label></div>
+                        <input class="weui-input" type="datetime-local" data-clear-btn="true" value="" placeholder="结束时间..."/>
+                    </div>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <div class="weui-cell__hd"><label class="weui-label">请假理由:</label></div>
+                        <textarea class="weui-textarea" placeholder="请输入理由..." rows="4"></textarea>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -63,6 +111,9 @@
         </div>
     </div>
 
+<script>
+
+</script>
 
 </div>
 
