@@ -110,6 +110,14 @@ public interface IMapService {
      * @throws SQLException 异常
      */
     String searchEmpMonthCheckList(String date, String A0100) throws SQLException, ParseException;
+
+    /**
+     * 根据员工的A0100获取他所属的部门领导审核人
+     * @param a0100 员工标志
+     * @return 部门领导的信息json
+     */
+    String getCheckerByEmpA0100(String a0100) throws SQLException;
+
     //String initEmpCheckWorkListName(String A0100);
 
 }

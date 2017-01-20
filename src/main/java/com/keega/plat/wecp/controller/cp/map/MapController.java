@@ -55,22 +55,13 @@ public class MapController {
         return "/views/wechatcp/map/points2map";
     }
 
-    //员工考勤列表1
-    /*@RequestMapping(value = "/msg/show/check/list", method = RequestMethod.GET)
-    public String showEmployeeCheckInfo() {
-        //1.菜单验证经理身份才能显示这个菜单。
-        //2.其次，需要验证数据库经理身份，才能进入，防止直接用url登录。
-        //3.查看经理查看范围权限。
-        return "/views/wechatcp/map/checklist";
-    }*/
-
-    //员工考勤列表2(与员工个人月度考勤)
+    //员工考勤列表(与员工个人月度考勤)
     @RequestMapping(value = "/msg/emp/checks",method = RequestMethod.GET)
     public String showEmpCheckWorkInfo(@RequestParam(name = "code",required = false) String code,
                                        Model model,HttpSession session) throws WxErrorException, SQLException {
         String page = viewsService.redirect2OauthPage(code, model, session);
         if (page != null) return page;
-        return "/views/wechatcp/map/checklist2";
+        return "/views/wechatcp/map/checklist";
     }
 
     //员工个人月度考勤(因此方法无jqm缓存，已集成到checklist2.jsp页面中了)
@@ -82,7 +73,7 @@ public class MapController {
         model.addAttribute("A0100", A0100);
         model.addAttribute("A0101", A0101);
         if (true) return "/views/error/404";
-        return "/views/wechatcp/map/monthlist";//已启用
+        return "/views/wechatcp/map/monthlist";//已启用showEmpCheckWorkInfo,这个不用了
     }
 
     //请假的主页（主菜单）
@@ -135,7 +126,6 @@ public class MapController {
     public String getEmpCheckWorkInfos(@RequestParam(name = "date",required = false) String date,
                                        @RequestParam(name = "empName",required = false) String empName,
                                        @RequestParam(name = "A0100") String A0100) throws SQLException, ParseException {
-        System.out.println("date = " + date);
         return mapService.searchEmpCheckWorkInfoByDateAndA0100(date, A0100,empName);
     }
 
@@ -146,12 +136,18 @@ public class MapController {
         return mapService.searchEmpMonthCheckList(date, A0100);
     }
 
-    @ResponseBody
+    @ResponseBody//提交请假表单
     @RequestMapping(value = "/msg/leave/form/submit", method = RequestMethod.POST)
     public String submitLeaveForm(String name,String date) {//response
         System.out.println("name = " + name);
         System.out.println("date = " + date);
         return "";
+    }
+
+    @ResponseBody//获取请假单对应的审核人
+    @RequestMapping(value = "/msg/leave/get/checker", method = RequestMethod.POST)
+    public String getChecker(String A0100) throws SQLException {
+        return mapService.getCheckerByEmpA0100(A0100);
     }
 
 }

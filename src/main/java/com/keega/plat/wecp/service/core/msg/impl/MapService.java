@@ -294,4 +294,10 @@ public class MapService implements IMapService {
         return JsonUtil.obj2json(map);
     }
 
+    @Override
+    public String getCheckerByEmpA0100(String a0100) throws SQLException {
+        Map<String, Object> checker = mapDao.getDepartmentLeaderInfoByEmpA0100(a0100);
+        return JsonUtil.obj2json(checker);
+    }
+
 }

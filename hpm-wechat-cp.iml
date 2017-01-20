@@ -108,5 +108,6 @@
     <orderEntry type="library" name="jquery.mobile-1.4.5" level="application" />
     <orderEntry type="library" name="ionic.bundle" level="application" />
     <orderEntry type="library" name="app" level="application" />
+    <orderEntry type="library" name="angular" level="application" />
   </component>
 </module>

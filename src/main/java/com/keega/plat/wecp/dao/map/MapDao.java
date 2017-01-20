@@ -317,4 +317,36 @@ public class MapDao implements IMapDao {
         return Dal.map().queryList(sql,new Object[]{A0100});
     }
 
+    @Override
+    public Map<String, Object> getDepartmentLeaderInfoByEmpA0100(String A0100) throws SQLException {
+        String sql = "select A0100,A0101,\n" +
+                " (select top 1 codeitemdesc from codeitem where codeitemid=(select B0110 from UsrA01 \n" +
+                " where A0100 = (\n" +
+                " select RIGHT(staff_id,8) as A0100 from t_sys_staff_in_role \n" +
+                " where RIGHT(staff_id,8) \n" +
+                " in(select A0100 from UsrA01 where E0122 \n" +
+                " in (select E0122 from UsrA01 where A0100=?)) and role_id='00000003'))) as danwei,\n" +
+                " (select top 1 codeitemdesc from codeitem where codeitemid=(select E0122 from UsrA01 \n" +
+                " where A0100 = (\n" +
+                " select RIGHT(staff_id,8) as A0100 from t_sys_staff_in_role \n" +
+                " where RIGHT(staff_id,8) \n" +
+                " in(select A0100 from UsrA01 where E0122 \n" +
+                " in (select E0122 from UsrA01 where A0100=?)) and role_id='00000003'))) as danwei,\n" +
+                " (select top 1 codeitemdesc from codeitem where codeitemid=(select E01A1 from UsrA01 \n" +
+                " where A0100 = (\n" +
+                " select RIGHT(staff_id,8) as A0100 from t_sys_staff_in_role \n" +
+                " where RIGHT(staff_id,8) \n" +
+                " in(select A0100 from UsrA01 where E0122 \n" +
+                " in (select E0122 from UsrA01 where A0100=?)) and role_id='00000003'))) as gangwei\n" +
+                " from UsrA01 \n" +
+                " where \n" +
+                " A0100 = (\n" +
+                " select RIGHT(staff_id,8) as A0100 from t_sys_staff_in_role \n" +
+                " where RIGHT(staff_id,8) \n" +
+                " in(select A0100 from UsrA01 where E0122 \n" +
+                " in (select E0122 from UsrA01 where A0100=?)) and role_id='00000003')";
+        System.out.println("A0100 = " + A0100);
+        return Dal.map().query(sql,new Object[]{A0100,A0100,A0100,A0100});
+    }
+
 }

@@ -129,4 +129,12 @@ public interface IMapDao {
      */
     List<Map<String,Object>> getMonthRecordList(String date,String A0100) throws SQLException, ParseException;
 
+    /**
+     * 根据员工的A0100获取他所属的部门领导的信息
+     * @param A0100 员工标志
+     * @return 部门领导的信息
+     * @throws SQLException 异常
+     */
+    Map<String,Object> getDepartmentLeaderInfoByEmpA0100(String A0100) throws SQLException;
+
 }
