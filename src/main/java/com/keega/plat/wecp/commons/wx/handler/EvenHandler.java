@@ -1,5 +1,6 @@
 package com.keega.plat.wecp.commons.wx.handler;
 
+import com.keega.plat.wecp.service.core.msg.ICpSalaryService;
 import com.keega.plat.wecp.service.sys.ICpSysUserService;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
@@ -25,6 +26,8 @@ public class EvenHandler extends AbstractHandler {
 
     @Resource
     private ICpSysUserService cpSysUserService;
+    @Resource
+    private ICpSalaryService cpSalaryService;
 
     @Override
     public WxCpXmlOutMessage handle(WxCpXmlMessage wxCpXmlMessage, Map<String, Object> map,
@@ -46,16 +49,24 @@ public class EvenHandler extends AbstractHandler {
                     .build();
         }*/
 
-        if ("click".equals(event) && "salary".equals(eventKey)) {//点击查询我的薪资
-            return WxCpXmlOutTextMessage.TEXT()
-                    .content("点击了我的薪资！")
-                    .fromUser(wxCpXmlMessage.getToUserName())
-                    .toUser(wxCpXmlMessage.getFromUserName())
-                    .build();
+        if ("click".equals(event) && "salary".equals(eventKey)) {//点击查询我的本月薪资
+            try {
+                //String backContent = cpSalaryService.getThisMonthSalaryInfo(wxCpXmlMessage.getFromUserName());
+                String backContent = cpSalaryService.getTopYearSalaryInfoByUserId(wxCpXmlMessage.getFromUserName());
+                if (backContent == null) backContent = "本月还未有发放工资的记录!";
+                return WxCpXmlOutTextMessage.TEXT()
+                        .content(backContent)
+                        .fromUser(wxCpXmlMessage.getToUserName())
+                        .toUser(wxCpXmlMessage.getFromUserName())
+                        .build();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+
         if ("click".equals(event) && "help".equals(eventKey)) {//点击帮助
             return WxCpXmlOutTextMessage.TEXT()
-                    .content("点击了帮助！")
+                    .content("使用帮助，请仔细阅读系统使用说明书！")
                     .fromUser(wxCpXmlMessage.getToUserName())
                     .toUser(wxCpXmlMessage.getFromUserName())
                     .build();

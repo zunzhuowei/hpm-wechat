@@ -345,7 +345,6 @@ public class MapDao implements IMapDao {
                 " where RIGHT(staff_id,8) \n" +
                 " in(select A0100 from UsrA01 where E0122 \n" +
                 " in (select E0122 from UsrA01 where A0100=?)) and role_id='00000003')";
-        System.out.println("A0100 = " + A0100);
         return Dal.map().query(sql,new Object[]{A0100,A0100,A0100,A0100});
     }
 

@@ -25,4 +25,18 @@ public interface ICpSalaryService {
      */
     String getSalaryInfoByDateA0100(String a0100, String salaryDate) throws SQLException;
 
+    /**
+     * 获取本月薪资信息
+     * @return 本月信息内容
+     * @throws SQLException 异常
+     */
+    String getThisMonthSalaryInfo(String userId) throws SQLException;
+
+    /**
+     * 获取最新的12个月的薪资信息
+     * @param userId 用户id
+     * @return 12个月的薪资信息
+     * @throws SQLException 异常
+     */
+    String getTopYearSalaryInfoByUserId(String userId) throws SQLException;
 }

@@ -29,4 +29,22 @@ public class CpSalaryDao implements ICpSalaryDao {
         return Dal.map().query(sql, new String[]{a0100, salaryDate});
     }
 
+    @Override
+    public Map<String, Object> getThisMonthSalaryByUserId(String userId) throws SQLException {
+        String sql = "select E58AD as salary from UsrA58 where A0100 =(select top 1 A0100 from UsrA01 where openid=?)\n" +
+                "and A58Z0 like (LEFT((Select CONVERT(varchar(100), GETDATE(), 23)),7))";
+        return Dal.map().query(sql, new String[]{userId});
+    }
+
+    @Override
+    public List<Map<String, Object>> getTopYearSalaryByUserId(String userId) throws SQLException {
+        String sql = "select E58AD as salary,(Select CONVERT(varchar(100), A58Z0, 23)) as date\n" +
+                " from UsrA58 where A0100 =(select top 1 A0100 \n" +
+                " from UsrA01 where openid=?)\n" +
+                " and A58Z0 in (select top 12 A58Z0 as sendDate \n" +
+                " from UsrA58 where A0100 =(select top 1 A0100 from UsrA01 where openid=?) \n" +
+                " order by A58Z0 desc)";
+        return Dal.map().queryList(sql,new Object[]{userId,userId});
+    }
+
 }

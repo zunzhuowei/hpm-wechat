@@ -38,6 +38,27 @@ public class CpSalaryService implements ICpSalaryService {
     @Override
     public String getSalaryInfoByDateA0100(String a0100, String salaryDate) throws SQLException {
         Map<String,Object> salaryMap =  cpSalaryDao.getSalaryInfoByDateA0100(a0100, salaryDate);
+        if (salaryMap == null) return null;
         return salaryMap.get("salary") + "";
     }
+
+    @Override
+    public String getThisMonthSalaryInfo(String userId) throws SQLException {
+        Map<String, Object> salaryMap = cpSalaryDao.getThisMonthSalaryByUserId(userId);
+        if (salaryMap == null) return null;
+        return salaryMap.get("salary") + "";
+    }
+
+    @Override
+    public String getTopYearSalaryInfoByUserId(String userId) throws SQLException {
+        List<Map<String, Object>> salaryList = cpSalaryDao.getTopYearSalaryByUserId(userId);
+        StringBuilder sb = new StringBuilder();
+        sb.append("最近12个月的应发工资:\n\n");
+        for (int i = 0; i < salaryList.size(); i++) {
+            sb.append("时间:").append(salaryList.get(salaryList.size() - 1 - i).get("date")).append("  ")
+                    .append("薪资:").append(salaryList.get(salaryList.size() - 1 - i).get("salary")).append("元\n");
+        }
+        return sb.toString();
+    }
+
 }

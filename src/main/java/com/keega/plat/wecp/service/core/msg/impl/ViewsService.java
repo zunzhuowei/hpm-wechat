@@ -52,7 +52,8 @@ public class ViewsService implements IViewsService {
             return null;
         }
         if (session.getAttribute("user") == null) {
-            String userId = this.getOauth2UserInfoIdByCode(code);
+            //System.out.println("code = " + code);
+            String userId = wxMsgCpService.oauth2getUserInfo(code)[0];
             if (cpsysUserService.hasBindDB(userId)) {
                 Map<String, Object> user = cpsysUserService.getSysUserByCpUserId(userId);
                 session.setAttribute("user", user);
@@ -62,7 +63,8 @@ public class ViewsService implements IViewsService {
                 return "/views/wechatcp/oauth/oauth2";
             }
         } else {
-            String userId = this.getOauth2UserInfoIdByCode(code);
+            //System.out.println("code = " + code);
+            String userId = wxMsgCpService.oauth2getUserInfo(code)[0];
             if (!cpsysUserService.hasBindDB(userId)) {
                 model.addAttribute("userId", userId);//用于绑定账号时,把企业号用户的userId带到页面
                 return "/views/wechatcp/oauth/oauth2";

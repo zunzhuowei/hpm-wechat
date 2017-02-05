@@ -30,4 +30,21 @@ public interface ICpSalaryDao extends IBaseDao{
      * @return Map包装的薪资信息
      */
     Map<String,Object> getSalaryInfoByDateA0100(String a0100, String salaryDate) throws SQLException;
+
+    /**
+     * 根据用户id获取当月工资
+     * @param userId 用户id
+     * @return 薪资信息
+     * @throws SQLException 异常
+     */
+    Map<String, Object> getThisMonthSalaryByUserId(String userId) throws SQLException;
+
+    /**
+     * 根据用户id获取最后发放工资年的工资记录
+     * @param userId 用户id
+     * @return 12个月的薪资信息和日期
+     * @throws SQLException 异常
+     */
+    List<Map<String,Object>> getTopYearSalaryByUserId(String userId) throws SQLException;
+
 }
