@@ -150,7 +150,7 @@ public class MapController {
         return mapService.getCheckerByEmpA0100(A0100);
     }
 
-    @ResponseBody
+    @ResponseBody//请假表单的提交
     @RequestMapping(value = "/msg/submit/check/case",method = RequestMethod.POST)
     public String submitCheckCase(@RequestParam(name = "beginTime") String beginTime,
                                   @RequestParam(name = "endTime") String endTime,
