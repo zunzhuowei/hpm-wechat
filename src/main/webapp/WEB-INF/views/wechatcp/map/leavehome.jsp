@@ -226,7 +226,7 @@
                 }
                 $.ajax({
                     type: "POST",
-                    url: "/cp/msg/submit/check/case",
+                    url: "/cp/msg/leave/form/submit",
                     cache: false,
                     data: {
                         qjType: qjType,

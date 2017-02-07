@@ -27,14 +27,9 @@
 
 <h1>test for jssdk</h1>
 <button id="sao" type="button">选择相片</button>
-<button id="qq" type="button">分享qq</button>
+<img src="" style="display: none" id="photo">
 <script>
 
-    //    private String appid;
-    //    private String noncestr;
-    //    private long timestamp;
-    //    private String url;
-    //    private String signature;
     $(function () {
                 var appId = '${signature.appid}';
                 var nonceStr = '${signature.noncestr}';
@@ -65,6 +60,8 @@
                         sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
                         success: function (res) {
                             var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+                            $('#photo').attr('src',localIds);
+                            $('#photo').css('display','inherit');
                         }
                     });
 
@@ -73,13 +70,17 @@
             }
     );
 
+    $('#photo').on('click',function () {
+        $('#photo').css('display', 'none');
+    });
+
     wx.ready(function () {
         // 1 判断当前版本是否支持指定 JS 接口，支持批量判断
         // alert("1230k");
         wx.onMenuShareAppMessage({
             title: '标题',
             desc: '描述',
-            link: 'www.baidu.com',
+            link: 'https://www.baidu.com/index.php?tn=monline_3_dg',
             imgUrl: 'http://upload.chinaz.com/2015/0923/1442988834858.jpg',
             trigger: function (res) {
                 // 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
@@ -98,7 +99,7 @@
 
         wx.onMenuShareTimeline({
             title: '标题1',
-            link: 'www.baidu.com',
+            link: 'https://www.baidu.com/index.php?tn=monline_3_dg',
             imgUrl: 'http://upload.chinaz.com/2015/0923/1442988834858.jpg',
             trigger: function (res) {
                 // 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
@@ -118,7 +119,7 @@
         wx.onMenuShareQQ({
             title: 'qq标题', // 分享标题
             desc: 'qq描述', // 分享描述
-            link: 'www.baidu.com', // 分享链接
+            link: 'https://www.baidu.com/index.php?tn=monline_3_dg', // 分享链接
             imgUrl: 'http://upload.chinaz.com/2015/0923/1442988834858.jpg', // 分享图标
             success: function () {
                 // 用户确认分享后执行的回调函数

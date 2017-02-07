@@ -16,6 +16,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -138,26 +140,21 @@ public class MapController {
 
     @ResponseBody//提交请假表单
     @RequestMapping(value = "/msg/leave/form/submit", method = RequestMethod.POST)
-    public String submitLeaveForm(String name,String date) {//response
-        System.out.println("name = " + name);
-        System.out.println("date = " + date);
-        return "";
+    public String submitLeaveForm(@RequestParam(name = "beginTime") String beginTime,
+                                  @RequestParam(name = "endTime") String endTime,
+                                  @RequestParam(name = "reason") String reason,
+                                  @RequestParam(name = "qjType") String qjType) throws ParseException {//response
+        System.out.println("beginTime = " + beginTime);
+        System.out.println("endTime = " + endTime);
+        System.out.println("reason = " + reason);
+        System.out.println("qjType = " + qjType);
+        return "请假表单回执";
     }
 
     @ResponseBody//获取请假单对应的审核人
     @RequestMapping(value = "/msg/leave/get/checker", method = RequestMethod.POST)
     public String getChecker(String A0100) throws SQLException {
         return mapService.getCheckerByEmpA0100(A0100);
-    }
-
-    @ResponseBody//请假表单的提交
-    @RequestMapping(value = "/msg/submit/check/case",method = RequestMethod.POST)
-    public String submitCheckCase(@RequestParam(name = "beginTime") String beginTime,
-                                  @RequestParam(name = "endTime") String endTime,
-                                  @RequestParam(name = "reason") String reason,
-                                  @RequestParam(name = "qjType") String qjType) {
-
-        return "请假表单回执";
     }
 
 
