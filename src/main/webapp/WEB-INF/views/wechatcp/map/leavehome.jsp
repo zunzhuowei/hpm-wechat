@@ -49,7 +49,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/cp/msg/share" rel='external'>
+                    <a href="#" rel='external'>
                         <img src="/images/shenpi.png" style="width: 60px;height: 60px;">
                         <h2>审批中的假</h2>
                         <p>查看审批中的假</p>
